@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ค่าน้ำค่าไฟ หอพักอุตสารี</title>
+  <link rel="stylesheet" href="utilities-style.css" />
+</head>
+<body>
+  <div class="bill-container">
+    <h2 class="dorm-title">หอพักอุตสารี</h2>
+    <p class="location">ลาดกระบัง</p>
+
+    <!-- สัญลักษณ์ย้อนกลับ -->
+    <div class="back-to-home">
+      <a href="index.html" class="back-icon">&#8592; กลับหน้าหลัก</a> <!-- ใช้สัญลักษณ์ลูกศร -->
+    </div>
+
+    <form class="form" oninput="calculate()">
+      <div class="section">
+        <h3>คำนวณค่าไฟ</h3>
+        <label>
+          เลขมิเตอร์ปัจจุบัน
+          <input type="number" id="elec-current" value="27285" />
+        </label>
+        <label>
+          เลขมิเตอร์เดือนที่แล้ว
+          <input type="number" id="elec-previous" value="27254" />
+          <select id="elec-year"></select>
+        </label>
+        <div class="unit-box" id="elec-unit">0.00 <span>หน่วย</span></div>
+        <div class="cost-box" id="elec-cost">0.00</div>
+      </div>
+
+      <div class="section">
+        <h3>คำนวณค่าน้ำ</h3>
+        <label>
+          เลขมิเตอร์ปัจจุบัน
+          <input type="number" id="water-current" value="643" />
+        </label>
+        <label>
+          เลขมิเตอร์เดือนที่แล้ว
+          <input type="number" id="water-previous" value="635" />
+          <select id="water-year"></select>
+        </label>
+        <div class="unit-box" id="water-unit">0.00 <span>หน่วย</span></div>
+        <div class="cost-box" id="water-cost">0.00</div>
+      </div>
+
+      <button type="button" class="calculate-btn" onclick="finish()">เสร็จสิ้น</button>
+
+    </form>
+  </div>
+
+  <script>
+    const yearSelects = [document.getElementById('elec-year'), document.getElementById('water-year')];
+    const currentYear = new Date().getFullYear() + 543;
+
+    for (let year = currentYear; year >= 2540; year--) {
+      const option = document.createElement('option');
+      option.value = option.textContent = year;
+      yearSelects.forEach(select => select.appendChild(option.cloneNode(true)));
+    }
+
+    function calculate() {
+      const elecCurrent = parseFloat(document.getElementById('elec-current').value);
+      const elecPrevious = parseFloat(document.getElementById('elec-previous').value);
+      const waterCurrent = parseFloat(document.getElementById('water-current').value);
+      const waterPrevious = parseFloat(document.getElementById('water-previous').value);
+
+      const elecUnit = Math.max(0, elecCurrent - elecPrevious);
+      const waterUnit = Math.max(0, waterCurrent - waterPrevious);
+
+      const elecRate = 18.00;
+      const waterRate = 13.78;
+
+      document.getElementById('elec-unit').innerHTML = elecUnit.toFixed(2) + ' <span>หน่วย</span>';
+      document.getElementById('elec-cost').textContent = (elecUnit * elecRate).toFixed(2);
+
+      document.getElementById('water-unit').innerHTML = waterUnit.toFixed(2) + ' <span>หน่วย</span>';
+      document.getElementById('water-cost').textContent = (waterUnit * waterRate).toFixed(2);
+    }
+
+    window.onload = calculate;
+  </script>
+  <script>
+    // ฟังก์ชันคำนวณ (เดิม)
+    function calculate() {
+      const elecCurrent = parseFloat(document.getElementById('elec-current').value);
+      const elecPrevious = parseFloat(document.getElementById('elec-previous').value);
+      const waterCurrent = parseFloat(document.getElementById('water-current').value);
+      const waterPrevious = parseFloat(document.getElementById('water-previous').value);
+  
+      const elecUnit = Math.max(0, elecCurrent - elecPrevious);
+      const waterUnit = Math.max(0, waterCurrent - waterPrevious);
+  
+      const elecRate = 18.00;
+      const waterRate = 13.78;
+  
+      document.getElementById('elec-unit').innerHTML = elecUnit.toFixed(2) + ' <span>หน่วย</span>';
+      document.getElementById('elec-cost').textContent = (elecUnit * elecRate).toFixed(2);
+  
+      document.getElementById('water-unit').innerHTML = waterUnit.toFixed(2) + ' <span>หน่วย</span>';
+      document.getElementById('water-cost').textContent = (waterUnit * waterRate).toFixed(2);
+    }
+  
+    // ฟังก์ชันเมื่อกดปุ่มเสร็จสิ้น
+    function finish() {
+      alert('เสร็จสิ้น');
+      window.location.href = "index.html";
+    }
+  
+    // โหลดเมื่อเริ่มหน้า
+    window.onload = calculate;
+  </script>
+  
+</body>
+</html>

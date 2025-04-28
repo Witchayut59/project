@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ลงทะเบียนห้องพัก</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Kanit', sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      margin-left: 80px;
+      padding: 2rem;
+    }
+
+    .form-box {
+      background-color: white;
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 600px;
+      margin: 2rem auto;
+    }
+
+    h2, h3 {
+      color: #3c61af;
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    select {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      font-family: 'Kanit', sans-serif;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .form-row select {
+      flex: 1;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+    }
+
+    button {
+      padding: 0.5rem 2rem;
+      font-size: 1rem;
+      font-family: 'Kanit', sans-serif;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+
+    .btn-cancel {
+      background-color: red;
+      color: white;
+    }
+
+    .btn-submit {
+      background-color: #3c61af;
+      color: white;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      font-size: 2rem;
+      text-decoration: none;
+      background-color: #ffffff;
+      border: 2px solid #0e3d91;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      color: #0e3d91;
+      text-align: center;
+      line-height: 36px;
+      transition: background-color 0.3s, color 0.3s;
+      z-index: 1000;
+    }
+
+    .back-button:hover {
+      background-color: #0e3d91;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="check.html" class="back-button" title="กลับหน้าหลัก">←</a>
+
+  <div class="container">
+    <div class="form-box">
+      <h2>หอพักอูสุรี</h2>
+      <h3>แบบฟอร์มลงทะเบียน</h3>
+
+      <form id="form-register">
+        <label>ชื่อ - นามสกุล</label>
+        <input type="text" name="fullname" required>
+
+        <label>เลขบัตรประชาชน</label>
+        <input type="text" name="idcard" required>
+
+        <label>เบอร์โทรศัพท์</label>
+        <input type="tel" name="phone" required>
+
+        <label style="color:red;">วันที่ย้ายเข้า</label>
+        <div class="form-row">
+          <select name="day" required>
+            <option value="">วันที่</option>
+            ${[...Array(31).keys()].map(i => `<option>${i + 1}</option>`).join('')}
+          </select>
+          <select name="month" required>
+            ${["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."].map(m => `<option>${m}</option>`).join('')}
+          </select>
+          <select name="year" required>
+            ${[2566, 2567, 2568].map(y => `<option>${y}</option>`).join('')}
+          </select>
+        </div>
+
+        <label>ค่าเช่าต่อเดือน</label>
+        <input type="text" id="monthly-rent" readonly> บาท
+
+        <div class="button-group">
+          <button type="button" class="btn-cancel" onclick="window.location.href='check.html'">ยกเลิก</button>
+          <button type="submit" class="btn-submit">เสร็จสิ้น</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // ดึงข้อมูลจาก localStorage
+    const roomAir = localStorage.getItem('roomAir');
+    const rent = roomAir === 'มีแอร์' ? 3000 : 1900;
+    document.getElementById('monthly-rent').value = rent;
+  </script>
+
+</body>
+</html>

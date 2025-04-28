@@ -1,0 +1,119 @@
+/* check.html */
+body {
+    margin: 0;
+    font-family: 'Kanit', sans-serif;
+    background-color: #fdfdfd;
+  }
+  
+  .sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 80px;
+    height: calc(100% - 60px);
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+  }
+  
+  .sidebar a {
+    margin: 15px 0;
+    padding: 12px 18px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .sidebar a:hover {
+    background-color: #3a7cff;
+    color: #fff;
+  }
+  
+  .sidebar a.active {
+    background-color: #3a7cff;
+    color: #fff;
+  }
+  
+  .header {
+    margin-left: 100px;
+    margin-top: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+  }
+  
+  .search-box input {
+    padding: 8px 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: 300px;
+    max-width: 50%;
+  }
+  
+  .filters {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .filters select {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  .content {
+    margin-left: 100px;
+    padding: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+  }
+  
+  th, td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 16px;
+  }
+  
+  th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  tr:hover {
+    background-color: #f0f8ff;
+    cursor: pointer;
+  }
+  
+  .available {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .unavailable {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .air {
+    color: #0e3d91;
+  }
+  

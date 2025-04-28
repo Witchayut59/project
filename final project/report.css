@@ -1,0 +1,60 @@
+/* เริ่มต้นจากการตั้งค่าพื้นฐาน */
+body {
+    font-family: "Tahoma", sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 20px;
+  }
+  
+  .report-detail-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .report-detail {
+    margin-top: 20px;
+  }
+  
+  .report-detail p {
+    font-size: 16px;
+    color: #333;
+    margin: 10px 0;
+  }
+  
+  .back-btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 10px 20px;
+    background-color: #ff9800;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .back-btn:hover {
+    background-color: #fb8c00;
+  }
+  
+  .report-detail p#room-id {
+    font-weight: bold;
+  }
+  
+  .report-detail p#issue,
+  .report-detail p#repair-time {
+    color: #555;
+  }
+  

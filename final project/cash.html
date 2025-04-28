@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>รับชำระค่าบริการ</title>
+  <link rel="stylesheet" href="cash.css">
+</head>
+<body>
+  <div class="background-overlay"></div>
+  <div class="card">
+    <h2>รับชำระค่าบริการ</h2>
+
+    <div class="form-group">
+      <input type="text" id="receipt" readonly placeholder="เลขที่ใบเสร็จ (เช่น 3801/2569)">
+      <input type="text" id="time" readonly placeholder="เวลา (เช่น 12:48)">
+    </div>
+
+    <div class="input-full">
+      <input type="text" placeholder="หมายเลขห้อง">
+    </div>
+
+    <div class="input-full">
+      <input type="text" placeholder="ยอดเงินที่ชำระ (บาท)">
+    </div>
+
+    <!-- กดแล้วไปหน้า success.html -->
+    <a href="success.html" class="submit-btn" title="ยืนยันการชำระเงิน">
+      <img src="image/wallet-check.png" alt="submit">
+    </a>
+  </div>
+
+  <script>
+    window.onload = function () {
+      const now = new Date();
+
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const timeStr = `${hours}:${minutes}`;
+
+      const month = (now.getMonth() + 1).toString().padStart(2, '0');
+      const yearBE = now.getFullYear() + 543;
+      const random = Math.floor(1000 + Math.random() * 9000); // สุ่มเลข 4 หลัก
+      const receiptStr = `${random}/${month}${yearBE.toString().slice(-2)}`;
+
+      document.getElementById('time').value = timeStr;
+      document.getElementById('receipt').value = receiptStr;
+    };
+  </script>
+</body>
+</html>

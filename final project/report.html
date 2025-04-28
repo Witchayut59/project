@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>แจ้งปัญหาและร้องเรียน</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <section class="report-container">
+    <h2>แจ้งปัญหาและร้องเรียน</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>เลขห้อง</th>
+          <th>หัวข้อปัญหาและร้องเรียน</th>
+          <th>เวลาเข้าช่อม</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr onclick="goToDetail('101')">
+          <td>101</td>
+          <td>ซ่อมไฟ</td>
+          <td>12:00</td>
+        </tr>
+        <tr onclick="goToDetail('102')">
+          <td>102</td>
+          <td>ซ่อมห้องน้ำ</td>
+          <td>15:00</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <script>
+    function goToDetail(room) {
+      window.location.href = 'report-detail.html?room=' + room;
+    }
+  </script>
+
+</body>
+</html>

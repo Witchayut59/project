@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>รายละเอียดการแจ้งปัญหา</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <section class="report-detail-card">
+    
+    <!-- ปุ่มย้อนกลับด้านบนซ้าย -->
+    <button class="back-btn" onclick="goBack()">←</button>
+
+    <h2>แจ้งปัญหาและร้องเรียน</h2>
+
+    <div class="info">
+      <p><strong>หัวข้อปัญหาและร้องเรียน :</strong> ซ่อมไฟ</p>
+      <p><strong>เลขห้อง :</strong> 101</p>
+      <p><strong>รายละเอียด :</strong> เปลี่ยนหลอดไฟ</p>
+      <p><strong class="red">เวลาเข้าซ่อม :</strong> 12:00</p>
+    </div>
+
+    <!-- ปุ่มเสร็จสิ้น -->
+    <button class="done-btn" onclick="goHome()">เสร็จสิ้น</button>
+
+  </section>
+
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+
+    function goHome() {
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+</html>

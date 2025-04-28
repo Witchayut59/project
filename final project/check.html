@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>เช็คห้องว่าง</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Kanit', sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    .top-frame {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color: #ffffff;
+      box-shadow: 0 px 5px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      padding: 0 px;
+      z-index: 1000;
+    }
+
+    .top-frame .back-button {
+      font-size: 24px;
+      text-decoration: none;
+      color: #333;
+      margin-right: 20px;
+    }
+
+    .top-frame h1 {
+      font-size: 20px;
+      margin: 0;
+      color: #444;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 60px;
+      height: calc(100% - 60px);
+      background-color: #ffffff; /* สีพื้นหลังซ้ายกลับเป็นสีเดิม */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 20px;
+    }
+
+    .sidebar a {
+      margin: 10px 0;
+      padding: 1px 1px;
+      background-color: #ffffff; /* ปุ่มตึกสีขาว */
+      border-radius: 10px;
+      text-decoration: none; 
+      color: #333;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar a:hover {
+      background-color: #3a7cff; /* สีพื้นหลังปุ่มเมื่อ hover เป็นสีฟ้า */
+      color: #fff;
+    }
+
+    .sidebar a.active {
+      background-color: #0e3d91; /* สีของปุ่มที่เลือกเป็นฟ้า */
+      color: #fff;  
+    }
+
+    .header {
+      margin-left: 80px;
+      margin-top: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .search-box input {
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .filters {
+      margin-left: 80px;
+      padding: 10px 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .filters select {
+      padding: 4px;
+      font-size: 16px;
+    }
+
+    .content {
+      margin-left: 80px;
+      padding: 0 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background-color: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    th {
+      background-color: #f4f4f4;
+    }
+
+    tr:hover {
+      background-color: #f0f8ff;
+      cursor: pointer;
+    }
+
+    .available {
+      color: green;
+      font-weight: bold;
+    }
+
+    .unavailable {
+      color: red;
+      font-weight: bold;
+    }
+
+    .air {
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- เฟรมบน -->
+  <div class="top-frame">
+    <a href="index.html" class="back-button" title="กลับหน้าแรก">←</a>
+  </div>
+
+  <!-- Sidebar อาคาร -->
+  <div class="sidebar">
+    <a href="#" class="active" onclick="changeBuilding('1', this)">1</a>
+    <a href="#" onclick="changeBuilding('2', this)">2</a>
+    <a href="#" onclick="changeBuilding('3', this)">3</a>
+    <a href="#" onclick="changeBuilding('4', this)">4</a>
+  </div>
+
+  <!-- หัวข้อและค้นหา -->
+  <div class="header">
+    <h2 id="buildingTitle">ตึก 1</h2>
+    <div class="search-box">
+      <input type="text" id="search" placeholder="ค้นหาห้อง...">
+    </div>
+  </div>
+
+  <!-- ตัวกรอง -->
+  <div class="filters">
+    <select id="roomType">
+      <option value="">ทั้งหมด</option>
+      <option value="ไม่มีแอร์">ไม่มีแอร์</option>
+      <option value="มีแอร์">มีแอร์</option>
+    </select>
+    <select id="statusFilter">
+      <option value="">ทั้งหมด</option>
+      <option value="ว่าง">ว่าง</option>
+      <option value="ไม่ว่าง">ไม่ว่าง</option>
+    </select>
+  </div>
+
+  <!-- ตารางห้อง -->
+  <div class="content">
+    <h3>สถานะห้องพัก</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>เลขห้อง</th>
+          <th>สถานะ</th>
+          <th>ประเภทห้อง</th>
+        </tr>
+      </thead>
+      <tbody id="roomTable"></tbody>
+    </table>
+  </div>
+
+  <!-- สคริปต์ -->
+  <script>
+    const buildings = { 1: [], 2: [], 3: [], 4: [] };
+    for (let b of ['1', '2', '3', '4']) {
+      for (let i = 1; i <= 12; i++) {
+        const status = Math.random() > 0.5 ? "ว่าง" : "ไม่ว่าง";
+        const air = Math.random() > 0.5 ? "มีแอร์" : "ไม่มีแอร์";
+        buildings[b].push({ number: `${b}${i.toString().padStart(2, '0')}`, status, air });
+      }
+    }
+
+    const table = document.getElementById("roomTable");
+    const search = document.getElementById("search");
+    const statusFilter = document.getElementById("statusFilter");
+    const roomType = document.getElementById("roomType");
+    const buildingTitle = document.getElementById("buildingTitle");
+    let currentBuilding = '1';
+
+    function renderTable() {
+      const keyword = search.value.trim();
+      const selectedStatus = statusFilter.value;
+      const selectedAir = roomType.value;
+      const filtered = buildings[currentBuilding].filter(room =>
+        (room.number.includes(keyword) || room.status.includes(keyword)) &&
+        (selectedStatus === "" || room.status === selectedStatus) &&
+        (selectedAir === "" || room.air === selectedAir)
+      );
+      table.innerHTML = filtered.map(room => 
+        `<tr onclick="openRegisterForm('${room.number}', '${room.air}')">
+          <td>${room.number}</td>
+          <td class="${room.status === 'ว่าง' ? 'available' : 'unavailable'}">${room.status}</td>
+          <td class="air">${room.air}</td>
+        </tr>`).join('');
+    }
+
+    function changeBuilding(b, el = null) {
+      currentBuilding = b;
+      buildingTitle.textContent = `ตึก ${b}`;
+      document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+      if (el) el.classList.add('active');
+      else {
+        const defaultBtn = document.querySelector(`.sidebar a[onclick*="'${b}'"]`);
+        if (defaultBtn) defaultBtn.classList.add('active');
+      }
+      renderTable();
+    }
+
+    function openRegisterForm(roomNumber, roomAir) {
+      localStorage.setItem('selectedRoom', roomNumber);
+      localStorage.setItem('roomAir', roomAir);
+      window.location.href = 'register.html';
+    }
+
+    search.addEventListener("input", renderTable);
+    statusFilter.addEventListener("change", renderTable);
+    roomType.addEventListener("change", renderTable);
+
+    window.onload = () => {
+      changeBuilding('1');
+    };
+  </script>
+
+</body>
+</html>
